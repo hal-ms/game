@@ -16,7 +16,7 @@ func Hit(p int) {
 		fmt.Println(p)
 		point := repo.Hit.Add(p)
 		// 叩いてる
-		if p > 30 {
+		if p > 3 {
 			err := service.LCD.Start()
 			if err != nil {
 				log.SendSlack(err.Error())
