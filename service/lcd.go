@@ -1,6 +1,9 @@
 package service
 
-import "errors"
+import (
+	"errors"
+	"fmt"
+)
 
 var LCD = newLcdService()
 
@@ -22,27 +25,28 @@ func newLcdService() lcdService {
 
 // jobの登録
 func (l *lcdService) SetJob() error {
-
+	fmt.Println("setJob")
 	return nil
 }
 
 // アニメーションスタート
 func (l *lcdService) Start() error {
 	l.state = Start
-
+	fmt.Println("start")
 	return nil
 }
 
 // アニメーションストップ
 func (l *lcdService) Stop() error {
 	l.state = Stop
-
+	fmt.Println("stop")
 	return nil
 }
 
 // ディスプレイを消す
 func (l *lcdService) Hide() error {
 	l.state = Hide
+	fmt.Println("hide")
 	return nil
 }
 
@@ -53,6 +57,7 @@ func (l *lcdService) Next(progress int) error {
 	}
 	if l.progress+1 == progress {
 		l.progress++
+		fmt.Println("next")
 		// nextを送信
 	}
 	return nil
@@ -61,6 +66,7 @@ func (l *lcdService) Next(progress int) error {
 // リセット
 func (l *lcdService) Reset() error {
 	l.progress = 0
+	fmt.Println("reset")
 	l.state = Standby
 	return nil
 }

@@ -3,6 +3,8 @@ package cnto
 import (
 	"net/http"
 
+	"github.com/hal-ms/game/service"
+
 	"github.com/gin-gonic/gin"
 	"github.com/hal-ms/game/repo"
 )
@@ -14,5 +16,6 @@ func Button(c *gin.Context) {
 	}
 
 	repo.State.IsStandby(false)
+	service.LCD.SetJob()
 	c.JSON(http.StatusOK, "ok")
 }
