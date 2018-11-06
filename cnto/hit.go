@@ -30,11 +30,11 @@ func Hit(p int) {
 		}
 		fmt.Println(point)
 		// ステージ3なら
-		if point < 60 {
+		if point > 60 {
 			service.LCD.Next(2)
-		} else if point < 40 {
+		} else if point > 40 {
 			service.LCD.Next(1)
-		} else if point < 20 {
+		} else if point > 20 {
 			service.LCD.Next(0)
 		}
 	} else {
