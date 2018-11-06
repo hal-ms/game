@@ -4,7 +4,7 @@ import (
 	"github.com/hal-ms/game/model"
 )
 
-var State = stateRepo{}
+var State = stateRepo{state: model.State{false, false}}
 
 type stateRepo struct {
 	state model.State

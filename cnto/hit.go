@@ -7,7 +7,7 @@ import (
 )
 
 func Hit(p int) {
-	if !repo.State.Get().IsStandby {
+	if repo.State.Get().IsStandby {
 		return
 	}
 	if repo.State.Get().IsWearing {
