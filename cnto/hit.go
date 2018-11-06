@@ -13,7 +13,6 @@ func Hit(p int) {
 		return
 	}
 	if repo.State.Get().IsWearing {
-		fmt.Println(p)
 		point := repo.Hit.Add(p)
 		// 叩いてる
 		if p > 3 {
@@ -29,12 +28,13 @@ func Hit(p int) {
 				return
 			}
 		}
+		fmt.Println(point)
 		// ステージ3なら
-		if point < 600 {
+		if point < 60 {
 			service.LCD.Next(2)
-		} else if point < 400 {
+		} else if point < 40 {
 			service.LCD.Next(1)
-		} else if point < 200 {
+		} else if point < 20 {
 			service.LCD.Next(0)
 		}
 	} else {
