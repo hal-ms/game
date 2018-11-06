@@ -1,6 +1,8 @@
 package cnto
 
 import (
+	"fmt"
+
 	"github.com/hal-ms/game/log"
 	"github.com/hal-ms/game/repo"
 	"github.com/hal-ms/game/service"
@@ -11,6 +13,7 @@ func Hit(p int) {
 		return
 	}
 	if repo.State.Get().IsWearing {
+		fmt.Println(p)
 		point := repo.Hit.Add(p)
 		// 叩いてる
 		if p > 30 {
