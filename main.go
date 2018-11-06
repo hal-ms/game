@@ -12,7 +12,7 @@ import (
 func main() {
 	r := gin.Default()
 	r.POST("/button", cnto.Button)
-	r.POST("/is_wearing/:IsWearing", cnto.Button)
+	r.POST("/is_wearing/:IsWearing", cnto.IsWearing)
 	go r.Run()
 	c := &serial.Config{Name: "COM14", Baud: 9600}
 	s, err := serial.OpenPort(c)
