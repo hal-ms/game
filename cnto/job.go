@@ -10,7 +10,8 @@ import (
 func Job(c *gin.Context) {
 	job := c.Param("job")
 
-	if repo.Job.Exist(job) {
+	j, _ := repo.Job.Exist(job)
+	if j {
 		repo.Job.Job(job)
 		c.JSON(http.StatusOK, job)
 	} else {
