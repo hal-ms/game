@@ -13,8 +13,17 @@ func main() {
 	r := gin.Default()
 	r.POST("/button", cnto.Button)
 	r.POST("/is_wearing/:IsWearing", cnto.IsWearing)
+	r.POST("/job/:job", cnto.Job)
 	go r.Run()
-	c := &serial.Config{Name: "COM14", Baud: 9600}
+	go hitScreen()
+
+	for {
+	}
+
+}
+
+func hitScreen() {
+	c := &serial.Config{Name: "COM6", Baud: 9600}
 	s, err := serial.OpenPort(c)
 	buf := make([]byte, 128)
 	if err != nil {

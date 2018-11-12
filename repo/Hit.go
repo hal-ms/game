@@ -12,6 +12,7 @@ type hitRepo struct {
 func (h *hitRepo) Get() model.Hit {
 	return h.hit
 }
+
 func (h *hitRepo) Reset() {
 	h.hit.Point = 0
 }

@@ -13,28 +13,35 @@ func Hit(p int) {
 		return
 	}
 	if repo.State.Get().IsWearing {
+		service.LCD.Show()
 		point := repo.Hit.Add(p)
 		// 叩いてる
 		if p > 3 {
-			err := service.LCD.Start()
-			if err != nil {
-				log.SendSlack(err.Error())
-				return
+			if !repo.State.Get().IsHit {
+				err := service.LCD.Start()
+				if err != nil {
+					log.SendSlack(err.Error())
+					return
+				}
+				repo.State.IsHit(true)
 			}
 		} else {
-			err := service.LCD.Stop()
-			if err != nil {
-				log.SendSlack(err.Error())
-				return
+			if repo.State.Get().IsHit {
+				err := service.LCD.Stop()
+				if err != nil {
+					log.SendSlack(err.Error())
+					return
+				}
+				repo.State.IsHit(false)
 			}
 		}
 		fmt.Println(point)
 		// ステージ3なら
-		if point > 60 {
+		if point > 600 {
 			service.LCD.Next(2)
-		} else if point > 40 {
+		} else if point > 200 {
 			service.LCD.Next(1)
-		} else if point > 20 {
+		} else if point > 60 {
 			service.LCD.Next(0)
 		}
 	} else {
