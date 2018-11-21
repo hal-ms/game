@@ -8,6 +8,7 @@ import (
 
 	"github.com/hal-ms/game/log"
 	"github.com/hal-ms/game/repo"
+	"github.com/makki0205/config"
 )
 
 var Main = mainService{}
@@ -16,7 +17,8 @@ type mainService struct {
 }
 
 type StartMsg struct {
-	Success string `json:"success"`
+	Job string `json:"job"`
+	//Success bool   `json:"success"`
 }
 
 type CheckMsg struct {
@@ -27,35 +29,40 @@ type EndMsg struct {
 }
 
 func (m *mainService) Start() bool {
-	res, _ := m.req("GET", "http://example.com:8080/start", nil)
+	res, _ := m.req("GET", config.Env("mainUrl")+"/start", nil)
 	b, _ := ioutil.ReadAll(res.Body)
 
 	var msg StartMsg
 	_ = json.Unmarshal(b, &msg)
 
-	return msg.Success == "true"
+	job := msg.Job
+
+	repo.Job.Job(job) // 次の仕事をセット
+
+	if _, err := repo.Job.Exist(job); err != nil {
+		log.SendSlack(err.Error())
+		return false
+	}
+
+	return true
 }
 
 func (m *mainService) Check() {
-	//res, _ := m.req("GET", "http://example.com:8080/check", nil)
+	//res, _ := m.req("GET", config.Env("mainUrl")+"/check", nil)
 
 }
 
 func (m *mainService) End() {
-	res, _ := m.req("GET", "http://example.com:8080/end", nil)
+	res, _ := m.req("GET", config.Env("mainUrl")+"/start", nil)
 	b, _ := ioutil.ReadAll(res.Body)
 
 	var msg EndMsg
 	_ = json.Unmarshal(b, &msg)
 
-	job := msg.Job
+	// 終了処理
+	repo.State.IsStandby(true) // 待機状態に遷移
+	repo.Hit.Reset()           // ヒットポイントをリセット
 
-	if _, err := repo.Job.Exist(job); err != nil {
-		log.SendSlack(err.Error())
-		return
-	}
-
-	repo.Job.Job(job)
 }
 
 func (m *mainService) req(method, url string, body io.Reader) (*http.Response, error) {

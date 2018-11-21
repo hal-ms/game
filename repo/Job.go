@@ -6,7 +6,15 @@ import (
 	"github.com/hal-ms/game/model"
 )
 
-var Job = jobRepo{job: model.Job{Jobs: []string{"cook"}, Job: ""}}
+var Job = jobRepo{job: model.Job{
+	Jobs: []string{
+		"cook",
+		"pianist",
+		"programmer",
+		"carpenter",
+		"priest",
+	}, Job: "",
+}}
 
 type jobRepo struct {
 	job model.Job

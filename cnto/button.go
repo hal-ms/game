@@ -15,15 +15,9 @@ func Button(c *gin.Context) {
 		return
 	}
 
-	if repo.Job.Get().Job == "" {
-		c.JSON(http.StatusBadRequest, "仕事がありません！")
-		return
-	}
-
-	repo.State.IsStandby(false)
-
 	if service.Main.Start() {
 		service.LCD.SetJob(repo.Job.Get().Job)
+		repo.State.IsStandby(false)
 		c.JSON(http.StatusOK, "ok")
 	} else {
 		repo.State.IsStandby(true)

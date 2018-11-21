@@ -1,0 +1,8 @@
+development:
+  mainUrl: example.com:8000
+  lcdPort: COM9
+
+production:
+  mainUrl: example.com:8000
+  lcdPort: COM9
+

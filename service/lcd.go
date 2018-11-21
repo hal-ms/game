@@ -5,6 +5,7 @@ import (
 	"fmt"
 
 	"github.com/hal-ms/game/log"
+	"github.com/makki0205/config"
 	"github.com/tarm/serial"
 )
 
@@ -25,23 +26,40 @@ const (
 )
 
 func newLcdService() lcdService {
-	c := &serial.Config{Name: "COM9", Baud: 9600}
+	c := &serial.Config{Name: config.Env("lcdPort"), Baud: 9600}
 	s, err := serial.OpenPort(c)
 	if err != nil {
 		log.SendSlack(err.Error())
 		panic(err)
 	}
 	conn := s
-	return lcdService{conn: conn}
+	l := lcdService{conn: conn}
+
+	go l.read()
+
+	return l
 }
 
 // jobの登録
 func (l *lcdService) SetJob(j string) error {
 	fmt.Println("setJob")
-	var job byte = 0x41
+	var job byte = 0x00
 	switch j {
 	case "cook":
+		// 料理人
 		job = 0x41
+	case "pianist":
+		// ピアニスト
+		job = 0x45
+	case "carpenter":
+		// 大工
+		job = 0x42
+	case "programmer":
+		// プログラマ
+		job = 0x44
+	case "priest":
+		// お坊さん
+		job = 0x43
 	default:
 		job = 0x00
 	}
@@ -114,6 +132,22 @@ func (l *lcdService) write(b []byte) error {
 	if err != nil {
 		log.SendSlack(err.Error())
 		panic(err)
+	}
+	return nil
+}
+
+func (l *lcdService) read() error {
+	buf := make([]byte, 2)
+	for {
+		l.conn.Read(buf)
+
+		switch buf[0] {
+		case byte(0x00):
+			//Main.End()
+			l.state = Standby
+		default:
+			break
+		}
 	}
 	return nil
 }
