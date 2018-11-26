@@ -1,8 +1,9 @@
 development:
-  mainUrl: example.com:8000
+  mainUrl: 172.20.10.3:8000
   lcdPort: COM9
+  micPort: COM16
 
 production:
   mainUrl: example.com:8000
   lcdPort: COM9
-
+  micPort: COM16
