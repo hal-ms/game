@@ -2,9 +2,11 @@ package service
 
 import (
 	"encoding/json"
+	"fmt"
 	"io"
 	"io/ioutil"
 	"net/http"
+	"time"
 
 	"github.com/hal-ms/game/log"
 	"github.com/hal-ms/game/repo"
@@ -16,8 +18,12 @@ var Main = mainService{}
 type mainService struct {
 }
 
+func init() {
+
+}
+
 type StartMsg struct {
-	Job string `json:"job"`
+	Name string `json:"name"`
 	//Success bool   `json:"success"`
 }
 
@@ -29,13 +35,18 @@ type EndMsg struct {
 }
 
 func (m *mainService) Start() bool {
-	res, _ := m.req("GET", config.Env("mainUrl")+"/start", nil)
-	b, _ := ioutil.ReadAll(res.Body)
-
+	res, _ := m.req("GET", config.Env("mainUrl")+"/api/game/start", nil)
+	b, err := ioutil.ReadAll(res.Body)
+	if err != nil {
+		panic(err)
+	}
 	var msg StartMsg
-	_ = json.Unmarshal(b, &msg)
-
-	job := msg.Job
+	err = json.Unmarshal(b, &msg)
+	if err != nil {
+		panic(err)
+	}
+	fmt.Println(msg.Name)
+	job := msg.Name
 
 	repo.Job.Job(job) // 次の仕事をセット
 
@@ -53,24 +64,27 @@ func (m *mainService) Check() {
 }
 
 func (m *mainService) End() {
-	res, _ := m.req("GET", config.Env("mainUrl")+"/start", nil)
-	b, _ := ioutil.ReadAll(res.Body)
-
-	var msg EndMsg
-	_ = json.Unmarshal(b, &msg)
+	m.req("GET", config.Env("mainUrl")+"/api/game/end", nil)
 
 	// 終了処理
 	repo.State.IsStandby(true) // 待機状態に遷移
 	repo.Hit.Reset()           // ヒットポイントをリセット
+	//中央画面処理待ち
+	time.Sleep(5 * time.Second)
+	LCD.Reset()
 
 }
 
 func (m *mainService) req(method, url string, body io.Reader) (*http.Response, error) {
-	req, _ := http.NewRequest(method, url, body)
+	req, err := http.NewRequest(method, url, body)
+	if err != nil {
+		panic(err)
+	}
 
+	fmt.Println(req)
 	client := new(http.Client)
 	res, err := client.Do(req)
-	defer res.Body.Close()
+	//defer res.Body.Close()
 
 	return res, err
 }

@@ -1,9 +1,9 @@
 development:
-  mainUrl: 172.20.10.3:8000
-  lcdPort: COM9
+  mainUrl: http://172.20.10.3:8000
+  lcdPort: /dev/tty.usbmodem1413
   micPort: COM16
 
 production:
   mainUrl: example.com:8000
-  lcdPort: COM9
+  lcdPort: /dev/tty.usbmodem1413
   micPort: COM16

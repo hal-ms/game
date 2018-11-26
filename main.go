@@ -3,8 +3,6 @@ package main
 import (
 	"strconv"
 
-	"fmt"
-
 	"github.com/gin-gonic/gin"
 	"github.com/hal-ms/game/cnto"
 	"github.com/hal-ms/game/log"
@@ -25,7 +23,7 @@ func main() {
 }
 
 func hitScreen() {
-	c := &serial.Config{Name: "COM16", Baud: 9600}
+	c := &serial.Config{Name: "/dev/tty.usbmodem1421", Baud: 9600}
 	s, err := serial.OpenPort(c)
 	buf := make([]byte, 128)
 	if err != nil {
@@ -37,7 +35,7 @@ func hitScreen() {
 		if err != nil {
 			panic(err)
 		}
-		fmt.Println(buf)
+		//fmt.Println(buf)
 		p, err := strconv.Atoi(string(buf[:1]))
 		if err != nil {
 			log.SendSlack(err.Error())
