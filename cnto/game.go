@@ -9,8 +9,7 @@ import (
 )
 
 func Game(p int) {
-	fmt.Println(p)
-	if p > 4 {
+	if p > 30 {
 		if !repo.State.Get().IsHit {
 			err := service.LCD.Start()
 			if err != nil {
@@ -18,6 +17,7 @@ func Game(p int) {
 				return
 			}
 			repo.State.IsHit(true)
+			Stage(repo.Hit.Get().Point)
 		}
 	} else {
 		if repo.State.Get().IsHit {
@@ -33,27 +33,21 @@ func Game(p int) {
 
 func Stage(p int) {
 	fmt.Println(p)
-	if p > 200 {
+	if p > 15000 {
 		err := service.LCD.Next(3)
 		if err != nil {
 			panic(err)
 		}
 		service.Main.End()
-	} else if p > 110 {
+	} else if p > 9000 {
 		err := service.LCD.Next(2)
 		if err != nil {
 			panic(err)
 		}
-	} else if p > 40 {
+	} else if p > 3000 {
 		err := service.LCD.Next(1)
 		if err != nil {
 			panic(err)
 		}
-	} else if p > 6 {
-		err := service.LCD.Next(0)
-		if err != nil {
-			panic(err)
-		}
 	}
-
 }

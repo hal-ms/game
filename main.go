@@ -3,6 +3,10 @@ package main
 import (
 	"strconv"
 
+	"github.com/hal-ms/game/service"
+
+	"github.com/makki0205/config"
+
 	"github.com/gin-gonic/gin"
 	"github.com/hal-ms/game/cnto"
 	"github.com/hal-ms/game/log"
@@ -10,33 +14,32 @@ import (
 )
 
 func main() {
+	service.LCD.Reset()
 	r := gin.Default()
 	r.POST("/button", cnto.Button)
 	r.POST("/is_wearing/:IsWearing", cnto.IsWearing)
 	r.POST("/job/:job", cnto.Job)
 	go r.Run()
-	go hitScreen()
-
-	for {
-	}
-
+	hitScreen()
 }
 
 func hitScreen() {
-	c := &serial.Config{Name: "/dev/tty.usbmodem1421", Baud: 9600}
+	c := &serial.Config{Name: config.Env("micPort"), Baud: 9600}
 	s, err := serial.OpenPort(c)
-	buf := make([]byte, 128)
+	if err != nil {
+		panic(err)
+	}
+	buf := make([]byte, 4)
 	if err != nil {
 		log.SendSlack(err.Error())
 		panic(err)
 	}
 	for {
-		_, err := s.Read(buf)
+		n, err := s.Read(buf)
 		if err != nil {
 			panic(err)
 		}
-		//fmt.Println(buf)
-		p, err := strconv.Atoi(string(buf[:1]))
+		p, err := strconv.Atoi(string(buf[:n]))
 		if err != nil {
 			log.SendSlack(err.Error())
 			continue

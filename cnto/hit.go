@@ -11,9 +11,8 @@ func Hit(p int) {
 	}
 	if repo.State.Get().IsWearing {
 		service.LCD.Show()
-		point := repo.Hit.Add(p)
+		repo.Hit.Add(p)
 		Game(p)
-		Stage(point)
 	} else {
 		service.LCD.Hide()
 	}

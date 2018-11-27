@@ -98,7 +98,7 @@ func (l *lcdService) Hide() error {
 // ディスプレイを表示する
 func (l *lcdService) Show() error {
 	l.state = Show
-	fmt.Println("show")
+	//fmt.Println("show")
 	l.write([]byte{0x2B})
 	return nil
 }
@@ -110,7 +110,7 @@ func (l *lcdService) Next(progress int) error {
 	}
 	if l.progress+1 == progress {
 		l.progress++
-		fmt.Println("next")
+		fmt.Println("!!!!!!!!!!next!!!!!!!!")
 		// nextを送信
 		l.write([]byte{0x20})
 	}
