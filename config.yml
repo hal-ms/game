@@ -1,5 +1,5 @@
 development:
   mainUrl: http://172.20.10.3:8000
-  lcdPort: /dev/tty.usbmodem1423
-  micPort: /dev/tty.usbmodem1411
+  lcdPort: /dev/tty.usbmodem14333
+  micPort: /dev/tty.usbmodem14321
   slack_url: https://hooks.slack.com/services/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
