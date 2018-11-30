@@ -35,7 +35,7 @@ type EndMsg struct {
 }
 
 func (m *mainService) Start() bool {
-	res, _ := m.req("GET", config.Env("mainUrl")+"/api/game/start", nil)
+	res, _ := http.Get(config.Env("mainUrl") + "/api/game/start")
 	b, err := ioutil.ReadAll(res.Body)
 	if err != nil {
 		panic(err)
