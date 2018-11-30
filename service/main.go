@@ -8,9 +8,9 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/hal-ms/game/log"
 	"github.com/hal-ms/game/repo"
 	"github.com/makki0205/config"
+	"github.com/makki0205/log"
 )
 
 var Main = mainService{}
@@ -35,6 +35,7 @@ type EndMsg struct {
 }
 
 func (m *mainService) Start() bool {
+	fmt.Println(config.Env("mainUrl") + "/api/game/start")
 	res, _ := http.Get(config.Env("mainUrl") + "/api/game/start")
 	b, err := ioutil.ReadAll(res.Body)
 	if err != nil {
@@ -51,7 +52,7 @@ func (m *mainService) Start() bool {
 	repo.Job.Job(job) // 次の仕事をセット
 
 	if _, err := repo.Job.Exist(job); err != nil {
-		log.SendSlack(err.Error())
+		log.Err(err)
 		return false
 	}
 

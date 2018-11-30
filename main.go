@@ -3,17 +3,19 @@ package main
 import (
 	"strconv"
 
+	"github.com/makki0205/log"
+
 	"github.com/hal-ms/game/service"
 
 	"github.com/makki0205/config"
 
 	"github.com/gin-gonic/gin"
 	"github.com/hal-ms/game/cnto"
-	"github.com/hal-ms/game/log"
 	"github.com/tarm/serial"
 )
 
 func main() {
+	log.ServiceName = "ms-game"
 	service.LCD.Reset()
 	r := gin.Default()
 	r.POST("/button", cnto.Button)

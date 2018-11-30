@@ -4,8 +4,8 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/hal-ms/game/log"
 	"github.com/makki0205/config"
+	"github.com/makki0205/log"
 	"github.com/tarm/serial"
 )
 
@@ -29,8 +29,7 @@ func newLcdService() lcdService {
 	c := &serial.Config{Name: config.Env("lcdPort"), Baud: 9600}
 	s, err := serial.OpenPort(c)
 	if err != nil {
-		log.SendSlack(err.Error())
-		panic(err)
+		log.Err(err)
 	}
 	conn := s
 	l := lcdService{conn: conn}
@@ -128,10 +127,13 @@ func (l *lcdService) Reset() error {
 
 // 信号送信
 func (l *lcdService) write(b []byte) error {
+	if l.conn == nil {
+		log.Err(errors.New("LCDの接続ができていません"))
+		return errors.New("LCDの接続ができていません")
+	}
 	_, err := l.conn.Write(b)
 	if err != nil {
-		log.SendSlack(err.Error())
-		panic(err)
+		log.Err(err)
 	}
 	return nil
 }
@@ -139,6 +141,9 @@ func (l *lcdService) write(b []byte) error {
 func (l *lcdService) read() error {
 	buf := make([]byte, 2)
 	for {
+		if l.conn == nil {
+			continue
+		}
 		l.conn.Read(buf)
 
 		switch buf[0] {

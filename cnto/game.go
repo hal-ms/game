@@ -3,9 +3,9 @@ package cnto
 import (
 	"fmt"
 
-	"github.com/hal-ms/game/log"
 	"github.com/hal-ms/game/repo"
 	"github.com/hal-ms/game/service"
+	"github.com/makki0205/log"
 )
 
 func Game(p int) {
@@ -13,7 +13,7 @@ func Game(p int) {
 		if !repo.State.Get().IsHit {
 			err := service.LCD.Start()
 			if err != nil {
-				log.SendSlack(err.Error())
+				log.Err(err)
 				return
 			}
 			repo.State.IsHit(true)
@@ -23,7 +23,7 @@ func Game(p int) {
 		if repo.State.Get().IsHit {
 			err := service.LCD.Stop()
 			if err != nil {
-				log.SendSlack(err.Error())
+				log.Err(err)
 				return
 			}
 			repo.State.IsHit(false)
