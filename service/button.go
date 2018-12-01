@@ -2,7 +2,6 @@ package service
 
 import (
 	"errors"
-	"fmt"
 
 	"github.com/hal-ms/game/repo"
 	"github.com/makki0205/log"
@@ -13,7 +12,6 @@ func GameStart() {
 		log.Err(errors.New("開始要求失敗しました"))
 		return
 	}
-	fmt.Println(Main.Start())
 	if Main.Start() {
 		err := LCD.SetJob(repo.Job.Get().Job)
 		if err != nil {

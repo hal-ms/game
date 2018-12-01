@@ -1,7 +1,6 @@
 package cnto
 
 import (
-	"fmt"
 	"net/http"
 
 	"github.com/hal-ms/game/service"
@@ -15,7 +14,6 @@ func Button(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, "ゲーム中です！")
 		return
 	}
-	fmt.Println(service.Main.Start())
 	if service.Main.Start() {
 		err := service.LCD.SetJob(repo.Job.Get().Job)
 		if err != nil {

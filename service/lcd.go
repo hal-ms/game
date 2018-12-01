@@ -2,7 +2,6 @@ package service
 
 import (
 	"errors"
-	"fmt"
 
 	"github.com/makki0205/config"
 	"github.com/makki0205/log"
@@ -41,7 +40,6 @@ func newLcdService() lcdService {
 
 // jobの登録
 func (l *lcdService) SetJob(j string) error {
-	fmt.Println("setJob")
 	var job byte = 0x00
 	switch j {
 	case "cook":
@@ -73,7 +71,6 @@ func (l *lcdService) SetJob(j string) error {
 // アニメーションスタート
 func (l *lcdService) Start() error {
 	l.state = Start
-	fmt.Println("start")
 	l.write([]byte{0x31})
 	return nil
 }
@@ -81,7 +78,6 @@ func (l *lcdService) Start() error {
 // アニメーションストップ
 func (l *lcdService) Stop() error {
 	l.state = Stop
-	fmt.Println("stop")
 	l.write([]byte{0x30})
 	return nil
 }
@@ -89,7 +85,6 @@ func (l *lcdService) Stop() error {
 // ディスプレイを消す
 func (l *lcdService) Hide() error {
 	l.state = Hide
-	fmt.Println("hide")
 	l.write([]byte{0x2D})
 	return nil
 }
@@ -97,7 +92,6 @@ func (l *lcdService) Hide() error {
 // ディスプレイを表示する
 func (l *lcdService) Show() error {
 	l.state = Show
-	//fmt.Println("show")
 	l.write([]byte{0x2B})
 	return nil
 }
@@ -109,7 +103,6 @@ func (l *lcdService) Next(progress int) error {
 	}
 	if l.progress+1 == progress {
 		l.progress++
-		fmt.Println("!!!!!!!!!!next!!!!!!!!")
 		// nextを送信
 		Main.Check(progress)
 		l.write([]byte{0x20})
@@ -120,7 +113,6 @@ func (l *lcdService) Next(progress int) error {
 // リセット
 func (l *lcdService) Reset() error {
 	l.progress = 0
-	fmt.Println("reset")
 	l.write([]byte{0x1B})
 	l.state = Standby
 	return nil

@@ -2,7 +2,6 @@ package service
 
 import (
 	"encoding/json"
-	"fmt"
 	"io"
 	"io/ioutil"
 	"net/http"
@@ -36,7 +35,6 @@ type EndMsg struct {
 }
 
 func (m *mainService) Start() bool {
-	fmt.Println(config.Env("mainUrl") + "/api/game/start")
 	res, _ := http.Get(config.Env("mainUrl") + "/api/game/start")
 	b, err := ioutil.ReadAll(res.Body)
 	if err != nil {
@@ -47,7 +45,6 @@ func (m *mainService) Start() bool {
 	if err != nil {
 		panic(err)
 	}
-	fmt.Println(msg.Name)
 	job := msg.Name
 
 	repo.Job.Job(job) // 次の仕事をセット
@@ -88,7 +85,6 @@ func (m *mainService) req(method, url string, body io.Reader) (*http.Response, e
 		panic(err)
 	}
 
-	fmt.Println(req)
 	client := new(http.Client)
 	res, err := client.Do(req)
 	//defer res.Body.Close()

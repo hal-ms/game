@@ -1,8 +1,6 @@
 package cnto
 
 import (
-	"fmt"
-
 	"github.com/hal-ms/game/repo"
 	"github.com/hal-ms/game/service"
 	"github.com/makki0205/log"
@@ -32,7 +30,6 @@ func Game(p int) {
 }
 
 func Stage(p int) {
-	fmt.Println(p)
 	if p > 9000 {
 		repo.Ending = true
 		err := service.LCD.Next(3)

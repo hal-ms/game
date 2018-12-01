@@ -1,7 +1,5 @@
 package repo
 
-import "fmt"
-
 var Hit = hitRepo{0}
 
 // TODO 必要であれば排他処理を入れる
@@ -19,7 +17,6 @@ func (h *hitRepo) Get() int {
 }
 
 func (h *hitRepo) Reset() {
-	fmt.Println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!RESET!!!!!!!!!!!!!!!!!!!!!")
 	h.p = 0
 }
 
@@ -28,6 +25,5 @@ func (h *hitRepo) Add(p int) int {
 		return h.Get()
 	}
 	h.p += p
-	fmt.Println(p, h.Get())
 	return h.Get()
 }
