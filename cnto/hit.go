@@ -8,9 +8,6 @@ import (
 )
 
 func Hit(p int) {
-	if repo.Ending {
-		return
-	}
 	if repo.State.Get().IsStandby {
 		fmt.Println(p)
 		if p > 55 && !repo.Ending {

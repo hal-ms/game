@@ -34,6 +34,7 @@ func Game(p int) {
 func Stage(p int) {
 	fmt.Println(p)
 	if p > 9000 {
+		repo.Ending = true
 		err := service.LCD.Next(3)
 		if err != nil {
 			panic(err)
