@@ -2,6 +2,7 @@ package service
 
 import (
 	"errors"
+	"fmt"
 
 	"github.com/makki0205/config"
 	"github.com/makki0205/log"
@@ -113,6 +114,7 @@ func (l *lcdService) Next(progress int) error {
 // リセット
 func (l *lcdService) Reset() error {
 	l.progress = 0
+	fmt.Println("LCD reset")
 	l.write([]byte{0x1B})
 	l.state = Standby
 	return nil
