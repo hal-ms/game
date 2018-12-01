@@ -76,6 +76,7 @@ func (m *mainService) End() {
 	repo.Hit.Reset() // ヒットポイントをリセット
 	//中央画面処理待ち
 	time.Sleep(9 * time.Second)
+	repo.Hit.Reset()
 	repo.Ending = false
 	LCD.Reset()
 
