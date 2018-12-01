@@ -17,7 +17,7 @@ func Game(p int) {
 				return
 			}
 			repo.State.IsHit(true)
-			Stage(repo.Hit.Get().Point)
+			Stage(repo.Hit.Get())
 		}
 	} else {
 		if repo.State.Get().IsHit {
