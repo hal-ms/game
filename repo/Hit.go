@@ -24,6 +24,9 @@ func (h *hitRepo) Reset() {
 }
 
 func (h *hitRepo) Add(p int) int {
+	if p > 130 {
+		return h.Get()
+	}
 	h.p += p
 	fmt.Println(p, h.Get())
 	return h.Get()
