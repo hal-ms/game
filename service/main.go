@@ -61,6 +61,7 @@ func (m *mainService) Start() bool {
 }
 
 func (m *mainService) Check(scene int) {
+	fmt.Println("se 送ったよ！")
 	m.req("GET", config.Env("mainUrl")+"/check/"+strconv.Itoa(scene), nil)
 
 }
