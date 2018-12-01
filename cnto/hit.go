@@ -10,7 +10,7 @@ import (
 func Hit(p int) {
 	if repo.State.Get().IsStandby {
 		fmt.Println(p)
-		if p > 60 {
+		if p > 60 && !repo.Ending {
 			service.GameStart()
 		}
 		return

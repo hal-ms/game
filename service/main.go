@@ -69,13 +69,14 @@ func (m *mainService) Check(scene int) {
 }
 
 func (m *mainService) End() {
-
+	repo.Ending = true
 	// 終了処理
 	repo.State.IsStandby(true) // 待機状態に遷移
 	m.req("GET", config.Env("mainUrl")+"/api/game/end", nil)
 	repo.Hit.Reset() // ヒットポイントをリセット
 	//中央画面処理待ち
-	time.Sleep(5 * time.Second)
+	time.Sleep(9 * time.Second)
+	repo.Ending = true
 	LCD.Reset()
 
 }
