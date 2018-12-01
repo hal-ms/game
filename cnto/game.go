@@ -33,13 +33,13 @@ func Game(p int) {
 
 func Stage(p int) {
 	fmt.Println(p)
-	if p > 15000 {
+	if p > 10000 {
 		err := service.LCD.Next(3)
 		if err != nil {
 			panic(err)
 		}
 		service.Main.End()
-	} else if p > 9000 {
+	} else if p > 7000 {
 		err := service.LCD.Next(2)
 		if err != nil {
 			panic(err)
