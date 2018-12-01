@@ -6,6 +6,7 @@ import (
 	"io"
 	"io/ioutil"
 	"net/http"
+	"strconv"
 	"time"
 
 	"github.com/hal-ms/game/repo"
@@ -59,8 +60,8 @@ func (m *mainService) Start() bool {
 	return true
 }
 
-func (m *mainService) Check() {
-	//res, _ := m.req("GET", config.Env("mainUrl")+"/check", nil)
+func (m *mainService) Check(scene int) {
+	m.req("GET", config.Env("mainUrl")+"/check/"+strconv.Itoa(scene), nil)
 
 }
 
