@@ -7,8 +7,14 @@ var Hit = hitRepo{}
 // TODO 必要であれば排他処理を入れる
 type hitRepo struct {
 	p int
+	channel
 }
 
+func init() {
+	go func() {
+
+	}()
+}
 func (h *hitRepo) Get() int {
 	return h.p
 }
@@ -20,6 +26,6 @@ func (h *hitRepo) Reset() {
 
 func (h *hitRepo) Add(p int) int {
 	h.p += p
-	fmt.Println(h.Get())
+	fmt.Println(p, h.Get())
 	return h.Get()
 }
