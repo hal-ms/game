@@ -111,6 +111,7 @@ func (l *lcdService) Next(progress int) error {
 		l.progress++
 		fmt.Println("!!!!!!!!!!next!!!!!!!!")
 		// nextを送信
+		Main.Check(progress)
 		l.write([]byte{0x20})
 	}
 	return nil
