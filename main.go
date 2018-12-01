@@ -31,7 +31,7 @@ func hitScreen() {
 	if err != nil {
 		panic(err)
 	}
-	buf := make([]byte, 4)
+	buf := make([]byte, 3)
 	if err != nil {
 		log.SendSlack(err.Error())
 		panic(err)

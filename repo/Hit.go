@@ -2,7 +2,7 @@ package repo
 
 import "fmt"
 
-var Hit = hitRepo{}
+var Hit = hitRepo{0}
 
 // TODO 必要であれば排他処理を入れる
 type hitRepo struct {
