@@ -7,7 +7,6 @@ var Hit = hitRepo{}
 // TODO 必要であれば排他処理を入れる
 type hitRepo struct {
 	p int
-	channel
 }
 
 func init() {
