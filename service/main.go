@@ -61,9 +61,7 @@ func (m *mainService) Start() bool {
 }
 
 func (m *mainService) Check(scene int) {
-	fmt.Println("se 送ったよ！")
-	fmt.Println(config.Env("mainUrl") + "/api/game/check/" + strconv.Itoa(scene))
-	_, err := http.Get(config.Env("mainUrl") + "/check/" + strconv.Itoa(scene))
+	_, err := http.Get(config.Env("mainUrl") + "/api/game/check/" + strconv.Itoa(scene))
 	if err != nil {
 		log.Err(err)
 	}
